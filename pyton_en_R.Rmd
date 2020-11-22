@@ -1,0 +1,53 @@
+---
+title: "Uso de python en RStudio"
+author: "Carlos LESMES"
+date: "10/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+use_python("/Users/carloslesmes/opt/anaconda3/bin/python")
+knitr::knit_engines$set(python = reticulate::eng_python)
+py_install(c("matplotlib","numpy","pandas"))
+```
+
+
+```{python}
+2**100
+import math
+math.pi
+```
+
+```{r}
+autos=cars
+```
+
+```{python}
+import pandas
+autos_py =r.autos
+autos_py['time']=autos_py['dist']/autos_py['speed']
+```
+
+```{r}
+plot(py$autos_py)
+```
+
+
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+t = np.arange(0.0, 2.0, 0.01)
+s = 1 +np.sin(2*np.pi*t)
+plt.plot(t, s)
+plt.xlabel('tiempo (s)')
+plt.ylabel('Voltaje (mV)')
+plt.grid(True)
+plt.savefig("test.png")
+plt.show()
+```
+
+
+
