@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.12.4
+# v0.12.17
 
 using Markdown
 using InteractiveUtils
@@ -13,11 +13,17 @@ macro bind(def, element)
     end
 end
 
+# ╔═╡ 592af9c8-3d53-11eb-2948-8bba2d583f1e
+begin
+using Dates
+@bind fecha DateField(default=today())
+end
+
 # ╔═╡ 1b4aaf82-0675-11eb-1b20-07ace1dee0e8
 using Distributions, Plots, StatsPlots, PlutoUI
 
-# ╔═╡ 40cb900a-10ac-11eb-3e1e-b17d75be25a0
-using Colors
+# ╔═╡ 482b887c-3d56-11eb-1be0-97c811ec5535
+using DataFrames, RDatasets
 
 # ╔═╡ 9a00d67e-1081-11eb-25f8-f5a615d4d182
 md"""
@@ -27,13 +33,13 @@ Cuaderno (notebook) simple, **reactivo** y *escrito* totalmente en Julia. Veamos
 """
 
 # ╔═╡ a3f6e1ec-1080-11eb-1def-393f6a9866d6
-y=2
+y=[1,2,3]
 
 # ╔═╡ 9b292610-1080-11eb-05a5-bf585221db9c
 x=4
 
 # ╔═╡ abb3ad16-1080-11eb-281f-fdb083207e96
-2^y
+2 .^y
 
 # ╔═╡ f82c9daa-0677-11eb-07eb-435641000188
 md"""
@@ -41,12 +47,12 @@ md"""
 
 Este notebook se actualiza a medida que se cambia un valor. Permite utilizar Markdown y escribir ecuaciones con LaTeX:
 
-$$\int_{0}^{1}\frac{1}{√(2π)}e^{-\left(\frac{x-μ}{σ}\right)^{2}}\,dx$$
+$$\int_{0}^{1}\frac{1}{√(2π)\sigma}e^{-\left(\frac{x-μ}{σ}\right)^{2}}\,dx$$
 
 Se pueden agregar sliders para las variables dentro y fuera de markdown.
 
-$(@bind μ Slider(1:10))
-$(@bind σ Slider(1:5))
+$(@bind μ Slider(1:10; default=0, show_value=true))
+$(@bind σ Slider(1:5; default=1, show_value=true))
 
 """
 
@@ -63,7 +69,7 @@ d1=Binomial(10,.3)
 d2=Poisson(3)
 
 # ╔═╡ bae8cb88-1083-11eb-021a-b53f570491fa
-@bind nal Slider(10:10:10000)
+@bind nal Slider(10:10:10000; show_value=true)
 
 # ╔═╡ d752a3c6-1082-11eb-2fa6-f1166143b001
 r2=rand(d2,nal)
@@ -72,7 +78,7 @@ r2=rand(d2,nal)
 ea_histogram(r2, bins= :scott, fillalpha=0.4)
 
 # ╔═╡ a4604ff0-10a9-11eb-2c50-6909307f5c73
-@bind n Slider(2:9)
+@bind n Slider(2:9;show_value=true)
 
 # ╔═╡ 0fe53530-1096-11eb-0270-af7a2092278c
 begin
@@ -83,16 +89,23 @@ mm=map(x -> mean(x), muestras)
 histogram(mm, bins=3*n,title="TLC",label="medias muestrales",xlabel="Medias",ylabel="Probabilidad",fillcolor=:purple)
 end
 
-# ╔═╡ 6523b8e2-10ac-11eb-24e4-2393d96d56eb
-Colors.color_names
-
-# ╔═╡ b08bc950-10ac-11eb-0e27-15df5943688a
-colorant"red"
-
 # ╔═╡ 776f61cc-1084-11eb-2f40-d7d6d514ce6d
-# sqr
+@bind color ColorStringPicker()
+
+# ╔═╡ 46fea92e-3d54-11eb-3f0d-33c2ef2ad1cb
+boxplot(randn(100,3),fillcolor=color)
+
+# ╔═╡ a5944fac-3d54-11eb-3f33-b5375a6ce87a
+@bind archivo FilePicker()
+
+# ╔═╡ 7d5f8d6a-3d56-11eb-1569-77f200f14c74
+iris = dataset("datasets","iris")
+
+# ╔═╡ f4bd5982-3d56-11eb-30cd-5f254d209514
+describe(iris)
 
 # ╔═╡ Cell order:
+# ╠═592af9c8-3d53-11eb-2948-8bba2d583f1e
 # ╠═9a00d67e-1081-11eb-25f8-f5a615d4d182
 # ╠═a3f6e1ec-1080-11eb-1def-393f6a9866d6
 # ╠═9b292610-1080-11eb-05a5-bf585221db9c
@@ -108,7 +121,9 @@ colorant"red"
 # ╠═f5c4beb6-1082-11eb-2ccb-8ddf0253824c
 # ╠═0fe53530-1096-11eb-0270-af7a2092278c
 # ╠═a4604ff0-10a9-11eb-2c50-6909307f5c73
-# ╠═40cb900a-10ac-11eb-3e1e-b17d75be25a0
-# ╠═6523b8e2-10ac-11eb-24e4-2393d96d56eb
-# ╠═b08bc950-10ac-11eb-0e27-15df5943688a
 # ╠═776f61cc-1084-11eb-2f40-d7d6d514ce6d
+# ╠═46fea92e-3d54-11eb-3f0d-33c2ef2ad1cb
+# ╠═a5944fac-3d54-11eb-3f33-b5375a6ce87a
+# ╠═482b887c-3d56-11eb-1be0-97c811ec5535
+# ╠═7d5f8d6a-3d56-11eb-1569-77f200f14c74
+# ╠═f4bd5982-3d56-11eb-30cd-5f254d209514
