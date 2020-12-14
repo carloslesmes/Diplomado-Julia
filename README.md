@@ -2,4 +2,4 @@
 
 ## Iniciación a Julia
 
-Se pretende dar las bases para el manejo estadístico de datos. 
+Se pretende dar las bases para el manejo estadístico de datos con Julia. 
