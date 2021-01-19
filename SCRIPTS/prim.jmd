@@ -1,0 +1,26 @@
+---
+title: Título
+author: Carlos Lesmes
+date: 1 dec 2020
+---
+
+# Primero
+
+Este es un ensayo. Usando Markdown *uno*, **dos**.
+Agregando link [julia](www.julialang.org)
+
+```julia
+rand(3,3)
+sqrt(-im)
+```
+
+```julia
+using Distributions, Plots
+d=Normal()
+d1=Binomial(10,.3)
+p1=plot(x -> pdf(d,x),-3,3)
+```
+Bla bla
+
+Con ejemplo de código en linea `j 2+2`.
+println("hola")
