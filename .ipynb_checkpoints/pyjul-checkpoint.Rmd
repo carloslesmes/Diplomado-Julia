@@ -1,0 +1,63 @@
+---
+title: "Julia"
+author: "Carlos LESMES"
+date: '`r format(Sys.Date(), "%B %d, %Y")`' 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+JuliaCall::julia_setup(rebuild = TRUE)
+library(JuliaCall)
+```
+
+## Usando Julia desde R
+
+
+Activamos el paquete *JuliaCall*. 
+
+
+Nótese que el chunk lleva en su primera línea `{julia}` el título del chunk y las opciones.
+
+```{julia primero,echo=TRUE}
+2+2
+A=[1 2 3; 4 5 6]
+A'
+```
+
+Ahora invocamos el paquete *Distributions* de Julia.
+
+```{julia}
+using Distributions
+d1 = Poisson(3)
+d2= Normal()
+rand(d1,2,2)
+rand(d2,3,3)
+```
+
+Pedir ayuda de Julia desde R:
+
+```{r}
+julia_help("sqrt")
+```
+
+```{julia}
+using Plots 
+gr()
+plot(Plots.fakedata(50,5),w=3)
+```
+
+
+
+```{r comment=NA,echo=FALSE}
+citations <- function() {
+    cit.list <- c('base','rstudioapi', names(sessionInfo()$otherPkgs))
+    for(i in 1:length(cit.list)) {
+        ref <- citation(cit.list[i])
+        print(ref, style = 'text')
+        cat('\n')
+    }
+}
+citations()
+```
+
